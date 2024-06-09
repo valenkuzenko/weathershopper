@@ -36,7 +36,6 @@ export class Card {
         const expireYear = (+currentYear + 1).toString().padStart(2, '0');
 
         const randomCvc = Math.floor(Math.random() * 900) + 100;
-
         return new Card(randomCardNumber, expireMonth, expireYear, randomCvc.toString(), 'lol');
     }
 }

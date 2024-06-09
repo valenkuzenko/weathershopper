@@ -1,7 +1,5 @@
 import { expect, Locator, Page } from '@playwright/test';
 
-const IMPLICITLY_WAIT = 120000; // 2 minutes will hopefully be enough for anyone
-
 export abstract class PageAbstract {
     // Default base URL
     public static baseUrl = 'https://weathershopper.pythonanywhere.com/';
@@ -20,7 +18,7 @@ export abstract class PageAbstract {
     }
 
     // Utility function to format strings
-    public static format(message: string, arg0: number | string, ...args: (number | string)[]): string {
+    public static format(message: string, arg0: number | string): string {
         return message.replace('{0}', arg0.toString());
     }
 
@@ -67,7 +65,7 @@ export class Element {
         return locators.map((locator) => new Element(locator, this.page));
     }
 
-    async click(timeout = IMPLICITLY_WAIT): Promise<Element> {
+    async click(timeout = 30000): Promise<Element> {
         await this.element.click({ timeout });
         return this;
     }
@@ -75,8 +73,7 @@ export class Element {
     // In the methods were we interact with elements using By class, we will use
     // this custom way of getting inner text to reduce the amount of code and make it more readable
     async getText(): Promise<string> {
-        const text = await this.element.innerText();
-        return text;
+        return await this.element.innerText();
     }
 }
 

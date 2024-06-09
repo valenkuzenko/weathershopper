@@ -1,11 +1,10 @@
-import {expect, Page} from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
 import { ItemData } from "../models/item-data";
+import { Card } from "../models/cards";
 
 import { By, PageAbstract } from "./page-abstract.po";
 import { checkoutPage } from "./locators";
-import {Card} from "../models/cards";
-
 
 export class CheckoutPage extends PageAbstract {
     async waitForUrl(): Promise<void> {

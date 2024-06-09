@@ -1,15 +1,9 @@
-import {By, PageAbstract} from "./page-abstract.po";
-import {mainPage} from "./locators";
-import {Page} from "@playwright/test";
+import { Page } from "@playwright/test";
+
+import { By, PageAbstract } from "./page-abstract.po";
+import { mainPage } from "./locators";
 
 export class MainPage extends PageAbstract {
-    // async getCurrentTemperature(page: Page): Promise<number|undefined>{
-    //     const temperatureLocator = await page.$('#temperature');
-    //     const temperature = await temperatureLocator?.innerText();
-    //     if (temperature)
-    //     return +temperature.split(' ')[0]
-    // }
-
     async getCurrentTemperature(page: Page): Promise<number> {
         const temperatureLocator = await page.$('#temperature');
         if (!temperatureLocator) {
