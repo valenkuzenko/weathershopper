@@ -83,7 +83,6 @@ export class PayWithCardIframePopup extends PageAbstract {
             // Fill payment details
             const emailInput = await frame.$('#email');
             await emailInput?.fill(email);
-            card.cardNumber = '6205 5000 0000 0000 004';
             const cardNumberInput = await frame.$('#card_number');
             await cardNumberInput?.fill(card.cardNumber);
             const expireDateInput = await frame.$('#cc-exp');
