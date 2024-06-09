@@ -1,0 +1,24 @@
+name: Playwright Tests
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+                - name: Set up Docker Buildx
+                uses: docker/setup-buildx-action@v2
+                  - name: Build Docker image
+                    run: docker build -t playwright-tests .
+                  - name: Run Docker container
+                    run: docker run --rm playwright-tests
+                  - uses: actions/upload-artifact@v4
+                    if: always()
+                    with:
+                      name: playwright-report
+                      path: playwright-report/
+                      retention-days: 30

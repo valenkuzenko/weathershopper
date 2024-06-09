@@ -1,0 +1,23 @@
+RUN DIRECTIONS
+
+1. Clone your Playwright project repository from the external source to your local machine and open in your IDE.
+2. Navigate to Project Directory: Open a terminal or command prompt and navigate to the root directory of the Playwright
+project where the Dockerfile is located. (use cd command. i.g.: my-device: username$ cd test-shop-playwright-project)
+3. When your row looks "my-device:test-shop-playwright-project username$ " enter "docker build -t playwright-tests ." command
+This command will build your Docker image.
+4. After successful image build you'll see "What's Next?" text and two options - your environment is ready to ru the test:
+enter "docker run --rm playwright-tests" command.
+Next you will see:
+(named parameters are announced and can be changed in playwright.config.ts file. here i add after // the exact rows in file):
+
+Running 1 test using 1 worker // (row 27)
+
+  ✓  1 [chromium] › test.spec.ts:28:9 › proper skincare purchase path › check temperature related successful purchase (10.5s) // (row 39)
+
+  1 passed (11.1s)
+
+To open last HTML report run: // (row 28)
+
+  npx playwright show-report
+
+5. After entering command "npx playwright show-report" the page with report will open in your default browser
