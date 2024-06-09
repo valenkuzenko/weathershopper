@@ -1,22 +1,10 @@
 import { defineConfig, devices } from '@playwright/test';
 import path from "node:path";
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// require('dotenv').config();
-
-/**
- * See https://playwright.dev/docs/test-configuration.
- */
-
 const args = process.argv.slice(2);
 const projectIndex = args.findIndex((arg) => arg.startsWith('--project='));
 if (projectIndex !== -1) process.env.PROJECT = args[projectIndex].split('=')[1];
 
-const headless = true;
-const envCI = !!process.env.CI;
 export default defineConfig({
   outputDir: 'test-results',
   testDir: './src/tests',
