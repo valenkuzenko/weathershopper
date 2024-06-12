@@ -1,13 +1,11 @@
 import { expect, Locator, Page } from '@playwright/test';
 
 export abstract class PageAbstract {
-    // Default base URL
-    public static baseUrl = 'https://weathershopper.pythonanywhere.com/';
 
     constructor(protected page: Page) {}
 
     // Wait for a specific URL
-    protected async waitForUrl(url = PageAbstract.baseUrl, timeout = 30000): Promise<void> {
+    protected async waitForUrl(url = '/', timeout = 30000): Promise<void> {
         await this.page.waitForURL(url, { timeout });
     }
 

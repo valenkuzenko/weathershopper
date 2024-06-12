@@ -4,7 +4,7 @@ import { Card } from "../models/cards";
 import { ItemData } from "../models/item-data";
 
 import { MainPage } from "../pages/temperature-page.po";
-import { CataloguePage } from "../pages/catalocue-page.po";
+import { CataloguePage } from "../pages/catalogue-page.po";
 import { CheckoutPage } from "../pages/checkout-page.po";
 import { PayWithCardIframePopup } from "../pages/checkout-page.po";
 import { ConfirmationPage } from "../pages/confirmation-page.po";
@@ -34,7 +34,8 @@ test.describe('proper skincare purchase path', () => {
         let confirmationPage = new ConfirmationPage(page);
 
         // selecting proper skincare category due to the temperature
-        await page.goto('https://weathershopper.pythonanywhere.com/');
+        // go to baseURL
+        await page.goto('/');
         await mainPage.verifyTitle('Current temperature');
 
         let currentTemperature = await mainPage.getCurrentTemperature(page);
