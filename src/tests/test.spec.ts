@@ -7,7 +7,7 @@ import { ItemData } from "../models/item-data";
 import { TemperaturePage } from "../pages/temperature-page.po";
 import { CataloguePage } from "../pages/catalogue-page.po";
 import { CheckoutPage } from "../pages/checkout-page.po";
-import { PayWithCardIframePopup } from "../pages/checkout-page.po";
+import { PayWithCardIframePopup } from "../pages/pay-with-card-iframe-popup.po";
 import { ConfirmationPage } from "../pages/confirmation-page.po";
 
 test.describe('proper skincare purchase path', () => {
