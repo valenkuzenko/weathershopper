@@ -1,4 +1,5 @@
 import { test } from '@playwright/test';
+import { faker } from '@faker-js/faker';
 
 import { Card } from "../models/cards";
 import { ItemData } from "../models/item-data";
@@ -96,7 +97,7 @@ test.describe('proper skincare purchase path', () => {
         await new Promise(resolve => setTimeout(resolve, 3000));
 
         // Prepare and enter email & card data to continue
-        const email = 'fake@address.com'
+        const email = faker.internet.email({provider: 'gmail.com'});
         const cardData = Card.prepareRandomCardData();
         await payWithCardPopup.verifyPopupIsUploaded(page);
         await payWithCardPopup.fillPaymentDetails(page, email, cardData);
