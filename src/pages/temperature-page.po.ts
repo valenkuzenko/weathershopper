@@ -11,13 +11,13 @@ export class TemperaturePage extends PageAbstract {
         }
 
         const temperatureText = await temperatureLocator.innerText();
-        const temperature = parseFloat(temperatureText.split(' ')[0]);
+        const currentTemperature = parseFloat(temperatureText.split(' ')[0]);
 
-        if (isNaN(temperature)) {
+        if (isNaN(currentTemperature)) {
             throw new Error('Failed to parse temperature');
         }
 
-        return temperature;
+        return currentTemperature;
     }
 
     async clickOnByMoistrizersButton(): Promise<void> {

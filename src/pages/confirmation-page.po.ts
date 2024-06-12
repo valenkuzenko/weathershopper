@@ -1,5 +1,6 @@
-import { PageAbstract } from "./page-abstract.po";
 import { expect } from "playwright/test";
+
+import { PageAbstract } from "./page-abstract.po";
 
 export class ConfirmationPage extends PageAbstract {
     async waitForUrl(): Promise<void> {

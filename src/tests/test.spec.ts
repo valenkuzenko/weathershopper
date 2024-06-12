@@ -27,24 +27,18 @@ test.describe('proper skincare purchase path', () => {
      * 9. Verify the success message (if not, throw error)
      */
     test('check temperature related successful purchase', async ({ page }) => {
-        // initializing the pages before for comfortable feature reading of the test steps
-        let mainPage = new TemperaturePage(page);
-        let cataloguePage = new CataloguePage(page);
-        let checkoutPage = new CheckoutPage(page);
-        let payWithCardPopup = new PayWithCardIframePopup(page);
-        let confirmationPage = new ConfirmationPage(page);
-
         // selecting proper skincare category due to the temperature
         // go to baseURL
         await page.goto('/');
+        const mainPage = new TemperaturePage(page);
         await mainPage.verifyTitle('Current temperature');
 
         let currentTemperature = await mainPage.getCurrentTemperature(page);
         let neededItems: string[];
 
+        const cataloguePage = new CataloguePage(page);
         while (true) {
             currentTemperature = await mainPage.getCurrentTemperature(page);
-
             if (currentTemperature < 19) {
                 // if the temperature is low, we will select moistrizers with aloe and almond
                 neededItems = ['Aloe', 'almond'];
@@ -85,10 +79,11 @@ test.describe('proper skincare purchase path', () => {
         await cataloguePage.clickOnCartButton();
 
         // Verify table, verify total, and pay
+        const checkoutPage = new CheckoutPage(page);
         await checkoutPage.waitForUrl();
         await checkoutPage.verifyTitle('Checkout');
         await checkoutPage.verifyTable([secondTargetItem, firstTargetItem]);
-        const expectedTotal = await checkoutPage.countExpectedTotal([secondTargetItem, firstTargetItem]);
+        const expectedTotal = await checkoutPage.calculateExpectedTotal([secondTargetItem, firstTargetItem]);
         await checkoutPage.verifyTotal(expectedTotal);
         await checkoutPage.clickOnPayWithCardButton();
 
@@ -98,10 +93,14 @@ test.describe('proper skincare purchase path', () => {
 
         // Prepare and enter email & card data to continue
         const email = faker.internet.email({provider: 'gmail.com'});
-        const cardData = Card.prepareRandomCardData();
+        const cardData = new Card();
+        cardData.getRandomCardData();
+
+        const payWithCardPopup = new PayWithCardIframePopup(page);
         await payWithCardPopup.verifyPopupIsUploaded(page);
         await payWithCardPopup.fillPaymentDetails(page, email, cardData);
 
+        const confirmationPage = new ConfirmationPage(page);
         await confirmationPage.waitForUrl();
         await confirmationPage.verifyPaymentResult("PAYMENT SUCCESS");
     });

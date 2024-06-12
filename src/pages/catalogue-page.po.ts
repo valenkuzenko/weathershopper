@@ -35,15 +35,15 @@ export class CataloguePage extends PageAbstract {
 
     async getLowestPriceItem(aloeMoisturisers: ItemData[]): Promise<ItemData> {
         let minPrice = Infinity;
-        let cheapestItem: ItemData = aloeMoisturisers[0];
+        let lowestPriceItem: ItemData = aloeMoisturisers[0];
 
         for (let i = 0; i < aloeMoisturisers.length; i++) {
             if (aloeMoisturisers[i].itemPrice < minPrice) {
                 minPrice = aloeMoisturisers[i].itemPrice;
-                cheapestItem = new ItemData(aloeMoisturisers[i].itemTitle, aloeMoisturisers[i].itemPrice);
+                lowestPriceItem = new ItemData(aloeMoisturisers[i].itemTitle, aloeMoisturisers[i].itemPrice);
             }
         }
-        return cheapestItem;
+        return lowestPriceItem;
     }
 
     async getItemsTitle(rowPos: number, itemPos: number): Promise<string> {
@@ -55,13 +55,13 @@ export class CataloguePage extends PageAbstract {
     }
 
     async getItemsPrice(rowPos: number, pricePos: number): Promise<number> {
-        const priceText = await this.getElement(
+        const itemPriceText = await this.getElement(
             By.css(CataloguePage.format(cataloguePage.itemsRowByPositon, rowPos)),
             By.css(CataloguePage.format(cataloguePage.itemInRowByPosition, pricePos)),
             By.css(cataloguePage.itemPrice),
         ).getText();
         // From all price text we need only the digits so we use a regular expression to get them
-        return parseInt(priceText.replace(/[^\d]/g, ''), 10);
+        return parseInt(itemPriceText.replace(/[^\d]/g, ''), 10);
     }
 
     async addTargetItemToCheckout(itemTitle: string): Promise<void> {
