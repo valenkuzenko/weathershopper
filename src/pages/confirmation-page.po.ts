@@ -1,4 +1,3 @@
-import { assert } from "console";
 import { PageAbstract } from "./page-abstract.po";
 import { expect } from "playwright/test";
 
