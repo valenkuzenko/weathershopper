@@ -3,6 +3,7 @@ import { expect } from "@playwright/test";
 import { ItemData } from "../models/item-data";
 
 import { By, PageAbstract } from "./page-abstract.po";
+import { PayWithCardIframePopup } from "../pages/pay-with-card-iframe-popup.po";
 import { checkoutPage } from "./locators";
 
 export class CheckoutPage extends PageAbstract {
@@ -57,9 +58,10 @@ export class CheckoutPage extends PageAbstract {
         expect(tableTotal).toContain(expectedTotal);
     }
 
-    async clickOnPayWithCardButton(): Promise<void> {
+    async clickOnPayWithCardButton(): Promise<PayWithCardIframePopup> {
         await this.getElement(
             By.css(checkoutPage.payWithCardButton),
         ).click();
+        return new PayWithCardIframePopup(this.page);
     }
 }

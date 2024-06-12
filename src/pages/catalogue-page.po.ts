@@ -3,6 +3,7 @@ import { expect, Locator } from "@playwright/test";
 import { ItemData } from "../models/item-data";
 
 import { By, PageAbstract } from "./page-abstract.po";
+import { CheckoutPage } from "../pages/checkout-page.po";
 import { cataloguePage } from "./locators";
 
 
@@ -94,9 +95,10 @@ export class CataloguePage extends PageAbstract {
         expect(cartButtonText).toContain(expectedCount + ' ');
     }
 
-    async clickOnCartButton(): Promise<void> {
+    async clickOnCartButton(): Promise<CheckoutPage> {
         await this.getElement(
             By.css(cataloguePage.cartButton),
         ).click();
+        return new CheckoutPage(this.page);
     }
 }

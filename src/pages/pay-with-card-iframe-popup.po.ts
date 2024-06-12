@@ -1,7 +1,8 @@
-import { Page } from "@playwright/test";
+import { Page, Frame } from "@playwright/test";
 
 import { Card } from "../models/cards";
 
+import { ConfirmationPage } from "../pages/confirmation-page.po";
 import { PageAbstract } from "./page-abstract.po";
 
 export class PayWithCardIframePopup extends PageAbstract {
@@ -11,14 +12,22 @@ export class PayWithCardIframePopup extends PageAbstract {
         await iFrameIsLoadedMarker?.isVisible();
     }
 
+    private async getIframeContentFrame(): Promise<Frame> {
+        const iframeSelector = 'iframe[src*="stripe"]';
+        await this.page.waitForSelector(iframeSelector);
+        const iframeElement = await this.page.$(iframeSelector);
+        const frame = await iframeElement?.contentFrame();
+        
+        if (!frame) {
+            throw new Error('Failed to access iframe content frame');
+        }
+        
+        return frame;
+    }
+
     async fillPaymentDetails(page: Page, email: string, card: Card): Promise<void> {
         // Wait for the iFrame to appear in the DOM and check if frame is not null before further actions
-        const iframeSelector = 'iframe[src*="stripe"]';
-        await page.waitForSelector(iframeSelector);
-        const iframeElement = await page.$(iframeSelector);
-        const frame = await iframeElement?.contentFrame();
-
-        if (frame) {
+        const frame = await this.getIframeContentFrame();
             // Fill payment details
             const emailInput = await frame.$('#email');
             await emailInput?.fill(email);
@@ -35,12 +44,13 @@ export class PayWithCardIframePopup extends PageAbstract {
             });
             if (!isDisplayed) {
                 await zipInput?.fill(card.zip);
-            }
-            const submitButton = await frame.$('#submitButton');
-            await submitButton?.click();
+            }     
+    }
 
-        } else {
-            throw new Error('Failed to access iframe content frame');
-        }
+    async submitPaymentDetails(page: Page): Promise<ConfirmationPage> {
+        const frame = await this.getIframeContentFrame();
+        const submitButton = await frame.$('#submitButton');
+        await submitButton?.click();
+        return new ConfirmationPage(page)
     }
 }

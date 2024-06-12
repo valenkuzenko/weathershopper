@@ -1,6 +1,7 @@
 import { Page } from "@playwright/test";
 
 import { By, PageAbstract } from "./page-abstract.po";
+import { CataloguePage } from "../pages/catalogue-page.po";
 import { temperaturePage } from "./locators";
 
 export class TemperaturePage extends PageAbstract {
@@ -20,15 +21,17 @@ export class TemperaturePage extends PageAbstract {
         return currentTemperature;
     }
 
-    async clickOnByMoistrizersButton(): Promise<void> {
+    async clickOnByMoistrizersButton(): Promise<CataloguePage> {
         await this.getElement(
             By.css(temperaturePage.buyMoisturizersButton),
         ).click();
+        return new CataloguePage(this.page);
     }
 
-    async clickOnBySunscreensButton(): Promise<void> {
+    async clickOnBySunscreensButton(): Promise<CataloguePage> {
         await this.getElement(
             By.css(temperaturePage.buySunscreensButton),
         ).click();
+        return new CataloguePage(this.page);
     }
 }

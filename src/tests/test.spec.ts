@@ -36,13 +36,12 @@ test.describe('proper skincare purchase path', () => {
         let currentTemperature = await mainPage.getCurrentTemperature(page);
         let neededItems: string[];
 
-        const cataloguePage = new CataloguePage(page);
         while (true) {
             currentTemperature = await mainPage.getCurrentTemperature(page);
             if (currentTemperature < 19) {
                 // if the temperature is low, we will select moistrizers with aloe and almond
                 neededItems = ['Aloe', 'almond'];
-                await mainPage.clickOnByMoistrizersButton();
+                const cataloguePage = await mainPage.clickOnByMoistrizersButton();
                 await cataloguePage.waitForMositurizersUrl();
                 await cataloguePage.verifyTitle('Moisturizers');
                 break;
@@ -50,15 +49,17 @@ test.describe('proper skincare purchase path', () => {
             } else if (currentTemperature > 34) {
                 // if the temperature is high, we will select sunscreens with SPF-50 and SPF-30
                 neededItems = ['SPF-50', 'SPF-30'];
-                await mainPage.clickOnBySunscreensButton();
+                const cataloguePage = await mainPage.clickOnBySunscreensButton();
                 await cataloguePage.waitForSunscreensUrl();
                 await cataloguePage.verifyTitle('Sunscreens');
                 break;
             } else {
                 // if the temperature is between 19 and 34 we come later (refresh page)
-                await cataloguePage.refreshPage();
+                await new CataloguePage(page).refreshPage();
             }
         }
+        // till we haven't got rid from the cycle and we're shifting to catalogue in it, the announcement is still needed
+        const cataloguePage = new CataloguePage(page);
         await cataloguePage.verifyEmptyCart();
 
         // second item doesn't appear every time, so we refresh page till it gets found in the catalogue
@@ -68,6 +69,7 @@ test.describe('proper skincare purchase path', () => {
             await cataloguePage.refreshPage();
             secondTargetItem = await cataloguePage.getNeededItemLowestPriceItem(neededItems[1]);
         }
+        
         // add to cart the least expensive second item (moisturizer that contains almond or sunscreen with SPF-30)
         await cataloguePage.addTargetItemToCheckout(secondTargetItem.itemTitle);
 
@@ -76,16 +78,15 @@ test.describe('proper skincare purchase path', () => {
         await cataloguePage.addTargetItemToCheckout(firstTargetItem.itemTitle);
 
         await cataloguePage.verifyAddedItemsCount('2');
-        await cataloguePage.clickOnCartButton();
+        const checkoutPage = await cataloguePage.clickOnCartButton();
 
         // Verify table, verify total, and pay
-        const checkoutPage = new CheckoutPage(page);
         await checkoutPage.waitForUrl();
         await checkoutPage.verifyTitle('Checkout');
         await checkoutPage.verifyTable([secondTargetItem, firstTargetItem]);
         const expectedTotal = await checkoutPage.calculateExpectedTotal([secondTargetItem, firstTargetItem]);
         await checkoutPage.verifyTotal(expectedTotal);
-        await checkoutPage.clickOnPayWithCardButton();
+        const payWithCardPopup = await checkoutPage.clickOnPayWithCardButton();
 
         // As we shift to the side service, we need to wait 3 seconds for payment popup to upload
         // (2 is enough, but we add 1 more to guarantee stability)
@@ -96,11 +97,10 @@ test.describe('proper skincare purchase path', () => {
         const cardData = new Card();
         cardData.getRandomCardData();
 
-        const payWithCardPopup = new PayWithCardIframePopup(page);
         await payWithCardPopup.verifyPopupIsUploaded(page);
         await payWithCardPopup.fillPaymentDetails(page, email, cardData);
+        const confirmationPage = await payWithCardPopup.submitPaymentDetails(page);
 
-        const confirmationPage = new ConfirmationPage(page);
         await confirmationPage.waitForUrl();
         await confirmationPage.verifyPaymentResult("PAYMENT SUCCESS");
     });
