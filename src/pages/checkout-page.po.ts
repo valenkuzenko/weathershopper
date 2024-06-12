@@ -22,7 +22,7 @@ export class CheckoutPage extends PageAbstract {
     }
 
     async getRowsCount(): Promise<number> {
-        return (await this.getElements(By.css('tbody tr'))).length;
+        return (await this.getElements(By.css(checkoutPage.tableRow))).length;
     }
 
     async verifyItemTitle(expectedTitle: string, rowPos: number): Promise<void> {

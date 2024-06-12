@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 import { Card } from "../models/cards";
 import { ItemData } from "../models/item-data";
 
-import { MainPage } from "../pages/temperature-page.po";
+import { TemperaturePage } from "../pages/temperature-page.po";
 import { CataloguePage } from "../pages/catalogue-page.po";
 import { CheckoutPage } from "../pages/checkout-page.po";
 import { PayWithCardIframePopup } from "../pages/checkout-page.po";
@@ -28,7 +28,7 @@ test.describe('proper skincare purchase path', () => {
      */
     test('check temperature related successful purchase', async ({ page }) => {
         // initializing the pages before for comfortable feature reading of the test steps
-        let mainPage = new MainPage(page);
+        let mainPage = new TemperaturePage(page);
         let cataloguePage = new CataloguePage(page);
         let checkoutPage = new CheckoutPage(page);
         let payWithCardPopup = new PayWithCardIframePopup(page);

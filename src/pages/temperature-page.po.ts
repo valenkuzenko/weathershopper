@@ -1,9 +1,9 @@
 import { Page } from "@playwright/test";
 
 import { By, PageAbstract } from "./page-abstract.po";
-import { mainPage } from "./locators";
+import { temperaturePage } from "./locators";
 
-export class MainPage extends PageAbstract {
+export class TemperaturePage extends PageAbstract {
     async getCurrentTemperature(page: Page): Promise<number> {
         const temperatureLocator = await page.$('#temperature');
         if (!temperatureLocator) {
@@ -22,13 +22,13 @@ export class MainPage extends PageAbstract {
 
     async clickOnByMoistrizersButton(): Promise<void> {
         await this.getElement(
-            By.css(mainPage.buyMoisturizersButton),
+            By.css(temperaturePage.buyMoisturizersButton),
         ).click();
     }
 
     async clickOnBySunscreensButton(): Promise<void> {
         await this.getElement(
-            By.css(mainPage.buySunscreensButton),
+            By.css(temperaturePage.buySunscreensButton),
         ).click();
     }
 }

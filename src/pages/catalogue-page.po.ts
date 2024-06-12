@@ -3,7 +3,7 @@ import { expect, Locator } from "@playwright/test";
 import { ItemData } from "../models/item-data";
 
 import { By, PageAbstract } from "./page-abstract.po";
-import { products } from "./locators";
+import { cataloguePage } from "./locators";
 
 
 export class CataloguePage extends PageAbstract {
@@ -48,17 +48,17 @@ export class CataloguePage extends PageAbstract {
 
     async getItemsTitle(rowPos: number, itemPos: number): Promise<string> {
         return await this.getElement(
-            By.css(CataloguePage.format(products.itemsRowByPositon, rowPos)),
-            By.css(CataloguePage.format(products.itemInRowByPosition, itemPos)),
-            By.css(products.itemTitle),
+            By.css(CataloguePage.format(cataloguePage.itemsRowByPositon, rowPos)),
+            By.css(CataloguePage.format(cataloguePage.itemInRowByPosition, itemPos)),
+            By.css(cataloguePage.itemTitle),
         ).getText();
     }
 
     async getItemsPrice(rowPos: number, pricePos: number): Promise<number> {
         const priceText = await this.getElement(
-            By.css(CataloguePage.format(products.itemsRowByPositon, rowPos)),
-            By.css(CataloguePage.format(products.itemInRowByPosition, pricePos)),
-            By.css(products.itemPrice),
+            By.css(CataloguePage.format(cataloguePage.itemsRowByPositon, rowPos)),
+            By.css(CataloguePage.format(cataloguePage.itemInRowByPosition, pricePos)),
+            By.css(cataloguePage.itemPrice),
         ).getText();
         // From all price text we need only the digits so we use a regular expression to get them
         return parseInt(priceText.replace(/[^\d]/g, ''), 10);
@@ -80,7 +80,7 @@ export class CataloguePage extends PageAbstract {
 
     public async verifyEmptyCart(): Promise<void> {
         const cartButtonText = await this.getElement(
-            By.css(products.cartButtonText),
+            By.css(cataloguePage.cartButtonText),
         ).getText();
         // adding gaps to make sure we have the passed number, not the several digits that contain it
         expect(cartButtonText).toEqual('Empty');
@@ -88,7 +88,7 @@ export class CataloguePage extends PageAbstract {
 
     public async verifyAddedItemsCount(expectedCount: string): Promise<void> {
         const cartButtonText = await this.getElement(
-            By.css(products.cartButtonText),
+            By.css(cataloguePage.cartButtonText),
         ).getText();
         // adding gaps to make sure we have the passed number, not the several digits that contain it
         expect(cartButtonText).toContain(expectedCount + ' ');
@@ -96,7 +96,7 @@ export class CataloguePage extends PageAbstract {
 
     async clickOnCartButton(): Promise<void> {
         await this.getElement(
-            By.css(products.cartButton),
+            By.css(cataloguePage.cartButton),
         ).click();
     }
 }
