@@ -63,23 +63,23 @@ Here's a brief overview of the project structure:
 # temperature-related-skincare-purchase
 
 ### tests/                     Test files
-both_cases_test.spec.ts     - test file for temperature-related purchase
+- both_cases_test.spec.ts     - test file for temperature-related purchase
 
 ### pages/                      Page Object Model files
-temperaturePage.po.ts          - Page class for the temperature page
-cataloguePage.po.ts            - Page class for the catalogue page
-checkoutPage.po.ts             - Page class for the checkout page
-payWithCardIframePopup.po.ts   - Page class for the payment details popup
-confirmationPage.po.ts         - Page class for the confirmation page
-locators.ts                    - locators of used pages splited into separate classes
+- temperaturePage.po.ts          - Page class for the temperature page
+- cataloguePage.po.ts            - Page class for the catalogue page
+- checkoutPage.po.ts             - Page class for the checkout page
+- payWithCardIframePopup.po.ts   - Page class for the payment details popup
+- confirmationPage.po.ts         - Page class for the confirmation page
+- locators.ts                    - locators of used pages splited into separate classes
 
 ### models/                      Helper functions and utilities
-cards.ts                       - class with a constructor method used for creating Card instances
-item-data.ts                   - class with items data structure
+- cards.ts                       - class with a constructor method used for creating Card instances
+- item-data.ts                   - class with items data structure
 
-Dockerfile (Docker configuration file, creates a Docker image tailored for running tests using Playwright)
-package.json                    - Project's package file
-README.md                       - Project's README file
+- Dockerfile (Docker configuration file, creates a Docker image tailored for running tests using Playwright)
+- package.json                    - Project's package file
+- README.md                       - Project's README file
 
 # Contact
 For any questions or feedback, please open an issue on this repository or contact valenkuzenko1101@gmail.com
