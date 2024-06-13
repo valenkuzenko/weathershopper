@@ -77,9 +77,10 @@ Here's a brief overview of the project structure:
 - cards.ts                       - class with a constructor method used for creating Card instances
 - item-data.ts                   - class with items data structure
 
-### Dockerfile (Docker configuration file, creates a Docker image tailored for running tests using Playwright)
-### package.json                    - Project's package file
-### README.md                       - Project's README file
+### Core Project Files           Project Essentials
+- Dockerfile (Docker configuration file, creates a Docker image tailored for running tests using Playwright)
+- package.json                    - Project's package file
+- README.md                       - Project's README file
 
 # Contact
 For any questions or feedback, please open an issue on this repository or contact valenkuzenko1101@gmail.com
