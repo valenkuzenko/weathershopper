@@ -45,18 +45,20 @@ async function conditionDependentSteps(page: Page, type: string): Promise<WhatAn
 test.describe('proper skincare purchase path', () => {
     /**
      * Steps:
-     * 1. Make sure you're at the temperature page
-     * 2. Get the current temperature value
-     * 3. Get to the proper product catalogue page according to the task (click on "Moisturizers"/"Sunscreens" button)
-     * task: Shop for moisturizers if the weather is below 19 degrees. Shop for suncreens if the weather is above 34 degrees.
-     * 4. Add to cart the least expensive products that contain needed parameters
-     * task: Aloe & almond containing items among moisturizers or SPF-50 & SPF-30 among suncreens
-     * 5. Move to cart (click on "Cart" button)
-     * task: Verify table looks correct. Fill out payment details and submit the form.
-     * 6. Verify all selected items are in the cart and the total price
-     * 7. Pay for items (click on "Pay with card" button)
-     * 8. Fill the popup fields by valid data and pay
-     * 9. Verify the success message (if not, throw error)
+     * 1. Announce both cases we need to check
+     * 2. Start with "low" condition
+     * 3. Get temperature value and refresh page if needed till it's below 19 degrees
+     * 4. Move to moisturizers page (click on "Moisturizers" button), 
+     * 5. Find and add to cart the least expensive products that contain needed parameters
+     * 6. Move to cart (click on "Cart" button)
+     * 7. Verify all selected items are in the cart and the total price
+     * 8. Pay for items (click on "Pay with card" button)
+     * 9. Fill the popup fields by valid data and pay
+     * 10. Verify the success message (if not, throw error)
+     * 11. Step to "high" condition
+     * 12. Get temperature value and refresh page if needed till it's above 34 degrees
+     * 13. Move to sunscreens page (click on "Sunscreens" button)
+     * 14. Repete steps 5 - 10 for the "high" condition
      */
     test('check temperature related successful purchase', async ({ page }) => {
         // selecting proper skincare category due to the temperature
