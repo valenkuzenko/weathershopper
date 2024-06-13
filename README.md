@@ -1,89 +1,85 @@
-# weathershopper
+# Temperature-Related Skincare Purchase Automation
 
-RUN DIRECTIONS
+## Project Description
 
-1. Clone your Playwright project repository from the external source to your local machine and open in your IDE.
-2. Navigate to Project Directory: Open a terminal or command prompt and navigate to the root directory of the Playwright
-project where the Dockerfile is located. (use cd command. i.g.: my-device: username$ cd test-shop-playwright-project)
-3. When your row looks "my-device:test-shop-playwright-project username$ " enter "docker build -t playwright-tests ." command
-This command will build your Docker image.
-4. After successful image build you'll see "What's Next?" text and two options - your environment is ready to ru the test:
-enter "docker run --rm playwright-tests" command.
-Next you will see:
-(named parameters are announced and can be changed in playwright.config.ts file. here i add after // the exact rows in file):
+This project automates the process of purchasing skincare products (moisturizers or sunscreens) based on the current temperature. The script navigates through a web application, checks the current temperature, and selects the appropriate skincare category (moisturizers if the temperature is low and sunscreens if the temperature is high). It then proceeds to add the least expensive items to the cart and completes the purchase process.
 
-Running 1 test using 1 worker // (row 27)
+## Prerequisites
 
-  ✓  1 [chromium] › test.spec.ts:28:9 › proper skincare purchase path › check temperature related successful purchase (10.5s) // (row 39)
+Before you can run this test, ensure you have the following installed on your platform:
 
-  1 passed (11.1s)
+- **Node.js** (version 14.x or later)
+- **npm** (Node Package Manager, usually comes with Node.js)
+- **Playwright** (version 1.15.0 or later)
+- **TypeScript** (version 4.1 or later)
 
-To open last HTML report run: // (row 28)
+## Installation
 
-  npx playwright show-report
+### 1. Clone the Repository
+First, clone the repository to your local machine:
 
-5. After entering command "npx playwright show-report" the page with report will open in your default browser
+```bash
+git clone https://github.com/valenkuzenko/weathershopper.git
+cd weathershopper
+```
 
-TEST DESCRIPTION
-This test simulates an automated workflow for purchasing skincare products based on the current temperature.
-The test navigates through a skincare shopping website and verifies the successful purchase of moisturizers or sunscreens
-depending on the temperature conditions.
+### 2. Install Dependencies
+Install the necessary dependencies using npm:
+```bash
+npm install
+```
+This will install all required packages listed in the package.json file.
 
-------------------------------------------------------------------------------------------------------------------------
-Steps:
+### 3. Install Docker
+Go to [https://www.docker.com/](https://www.docker.com/)  to install it on your device
 
-Initialization:
-- Initialize the required page objects (MainPage, CataloguePage, CheckoutPage, PayWithCardIframePopup, ConfirmationPage)
-for structured test execution.
+## Configuration
 
-Navigate to Website:
-- Navigate to the skincare shopping website (https://weathershopper.pythonanywhere.com/).
-- Verify the title of the main page to ensure correct navigation.
+### Playwright
+Ensure Playwright is set up correctly:
+```bash
+npx playwright install
+```
 
-Check Current Temperature:
-- Get the current temperature from the website.
-- Determine the skincare products needed based on temperature:
-Condition 1: If the temperature is below 19°C, select moisturizers with Aloe and Almond.
-Condition 2:If the temperature is above 34°C, select sunscreens with SPF-50 and SPF-30.
-- If the temperature is between 19°C and 34°C, refresh the page until temperature belongs to one of the mentioned conditions.
+# Running the Tests in Docker container
 
-Select Skincare Products:
-- Click on the appropriate category button (Buy Moisturizers or Buy Sunscreens).
-- Wait for the respective category page to load and verify the page title.
+### 1. Build Docker image
+- Navigate to Project Directory: Open a terminal or command prompt and navigate to the root directory of the Playwright project where the Dockerfile is located (in our case it's weathershopper folder) and enter:
 
-Verify Empty Cart:
-- Ensure that the shopping cart is empty before adding items.
+```bash
+docker build -t playwright-tests .
+```
 
-Select Second Target Item:
-- If the least expensive second target item (moisturizer with almond or sunscreen with SPF-30) is not present at the page,
-refresh the catalogue page until it is found. (we do this first, as refresh clears the cart, and we need to see both items in it)
-- Add the item to the shopping cart.
+### 2. Run the Tests
+After successful image build you'll see "What's Next?" text and two options - your environment is ready to ru the test: enter 
 
-Select First Target Item:
-- Find and add the least expensive first target item (Aloe moisturizer or sunscreen with SPF-50) to the shopping cart.
+```bash
+docker run --rm playwright-tests
+```
 
-Verify Cart Contents:
-Confirm that both items are successfully added to the cart.
-Verify that the cart contains exactly 2 items.
+# Project Structure
+Here's a brief overview of the project structure:
 
-Proceed to Checkout:
-Click on the cart button to proceed to checkout.
+temperature-related-skincare-purchase/
+│
+├── tests/                      # Test files
+│   └── both_cases_test.spec.ts     # test file for temperature-related purchase
+│
+├── pages/                      # Page Object Model files
+│   ├── temperaturePage.po.ts           # Page class for the temperature page
+│   ├── cataloguePage.po.ts             # Page class for the catalogue page
+│   ├── checkoutPage.po.ts              # Page class for the checkout page
+│   ├── payWithCardIframePopup.po.ts    # Page class for the payment details popup
+│   ├── confirmationPage.po.ts          # Page class for the confirmation page
+│   └── locators.ts                     # locators of used pages splited into separate classes
+│
+├── models/                    # Helper functions and utilities
+│   └── cards.ts               # class with a constructor method used for creating Card instances
+│   └── item-data.ts           # class with items data structure
+│
+├── Dockerfile                  # Docker configuration file, creates a Docker image tailored for running │                               # tests using Playwright
+├── package.json                # Project's package file
+└── README.md                   # Project's README file
 
-Verify Checkout Page:
-- Wait for the checkout page to load and verify the page title.
-- Verify that the table displays the selected items.
-- Calculate the expected total based on the selected items and verify the displayed total.
-
-Proceed to Payment:
-- Click on the "Pay with Card" button to initiate the payment process.
-
-Fill Payment Details:
-- Wait for the payment popup to load and verify its presence.
-- Enter fake email address and randomly generated card details for payment.
-
-Verify Payment Success:
-- Wait for the confirmation page to load and verify the payment result as "PAYMENT SUCCESS".
-
-Expected Outcome:
-The test is expected to navigate through the website, select appropriate skincare products based on temperature,
-add them to the cart, proceed through the checkout process, and successfully complete the payment.
+# Contact
+For any questions or feedback, please open an issue on this repository or contact valenkuzenko1101@gmail.com

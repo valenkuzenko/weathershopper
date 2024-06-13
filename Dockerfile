@@ -17,4 +17,4 @@ COPY . .
 RUN npx playwright install --with-deps
 
  # Setting the start command to run the tests in headless mode with Chromium
-CMD ["npx", "playwright", "test"]
+CMD ["npx", "playwright", "both_cases_test"]
