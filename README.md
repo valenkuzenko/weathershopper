@@ -60,8 +60,6 @@ docker run --rm playwright-tests
 # Project Structure
 Here's a brief overview of the project structure:
 
-# temperature-related-skincare-purchase
-
 ### tests/                     Test files
 - both_cases_test.spec.ts     - test file for temperature-related purchase
 
