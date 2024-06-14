@@ -13,10 +13,11 @@ Before you can run this test, ensure you have the following installed on your pl
 - **Playwright** (version 1.15.0 or later)
 - **TypeScript** (version 4.1 or later)
 
-## Installation and running
+## Installation and Running
 
-(without docker)
-### 1. Clone the Repository
+### Without Docker
+
+#### 1. Clone the Repository
 First, clone the repository to your local machine:
 
 ```bash
@@ -29,7 +30,7 @@ Install the necessary dependencies using npm:
 ```bash
 npm install
 ```
-This will install all required packages listed in the package.json file.
+This will install all required packages listed in the `package.json` file.
 
 ### 3. Install Playwright
 Ensure Playwright is set up correctly:
@@ -41,7 +42,8 @@ npx playwright install
 ```bash
 npx playwright test
 ```
- 
+-------------------------------------------------------------------------------------- 
+
 (with Docker)
 ### 1. Clone the Repository
 First, clone the repository to your local machine:
@@ -55,14 +57,13 @@ cd weathershopper
 Go to [https://www.docker.com/](https://www.docker.com/)  to install it on your device
 
 ### 3. Build Docker image
-- Navigate to Project Directory: Open a terminal or command prompt and navigate to the root directory of the Playwright project where the Dockerfile is located (in our case it's weathershopper folder) and enter:
-
+- Navigate to Project Directory:
 ```bash
 docker build -t playwright-tests .
 ```
 
 ### 4. Run the Tests in Docker container
-After successful image build you'll see "What's Next?" text and two options - your environment is ready to ru the test: enter 
+After successfully building the image, you'll see a "What's Next?" message with two options. Your environment is now ready to run the tests. Enter the following command:
 
 ```bash
 docker run --rm playwright-tests
