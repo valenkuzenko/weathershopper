@@ -13,8 +13,9 @@ Before you can run this test, ensure you have the following installed on your pl
 - **Playwright** (version 1.15.0 or later)
 - **TypeScript** (version 4.1 or later)
 
-## Installation
+## Installation and running
 
+(without docker)
 ### 1. Clone the Repository
 First, clone the repository to your local machine:
 
@@ -30,16 +31,28 @@ npm install
 ```
 This will install all required packages listed in the package.json file.
 
-### 3. Install Docker
-Go to [https://www.docker.com/](https://www.docker.com/)  to install it on your device
-
-## Configuration
-
-### Playwright
+### 3. Install Playwright
 Ensure Playwright is set up correctly:
 ```bash
 npx playwright install
 ```
+
+# 4. Run the Tests
+```bash
+npx playwright test
+```
+ 
+(with Docker)
+### 1. Clone the Repository
+First, clone the repository to your local machine:
+
+```bash
+git clone https://github.com/valenkuzenko/weathershopper.git
+cd weathershopper
+```
+
+### 2. Install Docker
+Go to [https://www.docker.com/](https://www.docker.com/)  to install it on your device
 
 # Running the Tests in Docker container
 
@@ -74,11 +87,6 @@ Here's a brief overview of the project structure:
 ### models/                      Helper functions and utilities
 - cards.ts                       - class with a constructor method used for creating Card instances
 - item-data.ts                   - class with items data structure
-
-### Core Project Files           Project Essentials
-- Dockerfile (Docker configuration file, creates a Docker image tailored for running tests using Playwright)
-- package.json                    - Project's package file
-- README.md                       - Project's README file
 
 # Contact
 For any questions or feedback, please open an issue on this repository or contact valenkuzenko1101@gmail.com
