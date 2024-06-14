@@ -37,7 +37,7 @@ Ensure Playwright is set up correctly:
 npx playwright install
 ```
 
-# 4. Run the Tests
+### 4. Run the Tests
 ```bash
 npx playwright test
 ```
@@ -54,16 +54,14 @@ cd weathershopper
 ### 2. Install Docker
 Go to [https://www.docker.com/](https://www.docker.com/)  to install it on your device
 
-# Running the Tests in Docker container
-
-### 1. Build Docker image
+### 3. Build Docker image
 - Navigate to Project Directory: Open a terminal or command prompt and navigate to the root directory of the Playwright project where the Dockerfile is located (in our case it's weathershopper folder) and enter:
 
 ```bash
 docker build -t playwright-tests .
 ```
 
-### 2. Run the Tests
+### 4. Run the Tests in Docker container
 After successful image build you'll see "What's Next?" text and two options - your environment is ready to ru the test: enter 
 
 ```bash
